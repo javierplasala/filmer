@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="Layouts/base-Layout :: head"></head>
+<body>
+
+    <nav th:replace="Layouts/base-Layout :: nav"></nav>
+
+    <h1>Login</h1>
+
+    <div class="alert alert-success" th:if="${usuarioRegistrado != null}" th:text="${usuarioRegistrado}"></div>
+
+    <div class="alert alert-danger" th:if="${param.error}">Credenciales incorrectas</div>
+
+    <form th:action="@{/signin}" method="POST">
+        <input type="text" name="username" placeholder="Usuario">
+        <input type="password" name="password" placeholder="Contraseña">
+
+        <button type="submit">Login</button>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="Layouts/base-Layout :: head"></head>
+
+<body>
+
+    <nav th:replace="Layouts/base-Layout :: nav"></nav>
+    <h1> REGISTRO DE USUARIO</h1>
+
+    <form th:action="@{/usuario/save}" method="POST">
+        <input type="text" name="username" placeholder="Usuario"> <!-- el usuario y contraseña son enviados al metodo del SecurityConfig !-->
+        <input type="password" name="password" placeholder="Contraseña">
+        <button type="submit">Registrar</button>
+
+    </form>
+</body>
+</html>

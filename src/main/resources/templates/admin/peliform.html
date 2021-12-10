@@ -1,0 +1,47 @@
+<!-- FORMULARIO SOLO VISIBLE PARA USUARIO CON ROL DE ADMINISTRADOR !-->
+
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="/Layouts/base-Layout :: head"></head>
+<body>
+
+    <nav th:replace="/Layouts/base-Layout :: nav"></nav>
+
+    <div class="conteiner mt-5">
+        <div class="row justify-content-center">
+            <div class="col-4">
+
+                <!--action es  donde va dirigido el formulario (como es una URL se pone @) ruta de la clase admin y el método savePeli que es el que va a guardarla !-->
+                <!--object es  para el objeto que estamos guardando en el formulario. Devine el método "peliForm" con attributeName "pelicula"  !-->
+                <!--method es  el método de envío  !-->
+                <!--enctype "multipart/form-data" es para poder enviar archivos !-->
+                <form th:action="@{/admin/save-peli}" th:object="${pelicula}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group my-4">
+                        <label>Título</label>
+                        <input type="text" placeholder="Titulo" th:field="*{titulo}" class="form-control" />
+                    </div>
+
+                    <div class="form-group my-4">
+                        <label>Fecha de Estreno</label>
+                        <input type="date" th:field="*{fechaEstreno}" class="form-control" /> <!-- field completa los atributos !-->
+                    </div>
+
+                    <div class="form-group my-4">
+                        <label>Portada</label>
+                        <input type="file" name="file"class="form-control"/><!-- name devine del nombre asignado al parámetro del @RequestParam del método "savePeli" !-->
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit"class="form-control btn btn-secondary" >Guardar Pelicula</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Mensaje en caso de guardar peliculas
+<div th:if="${peliGuardada != null}" th:text="${peliGuardada}"></div>
+    !-->
+</body>
+</html>

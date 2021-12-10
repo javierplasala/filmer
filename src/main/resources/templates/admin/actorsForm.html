@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="/Layouts/base-Layout :: head"></head>
+
+<body>
+
+    <nav th:replace="/Layouts/base-Layout :: nav"></nav>
+
+    <div class="conteiner mt-5">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <!-- Mensaje en caso de guardar peliculas !-->
+                <div class="alert alert-success text-center"th:if="${actorGuardado}" th:text="${actorGuardado}"></div>
+                <!--action es  donde va dirigido el formulario (como es una URL se pone @) ruta de la clase admin y el método savePeli que es el que va a guardarla !-->
+                <!--object es  para el objeto que estamos guardando en el formulario. Devine el método "peliForm" con attributeName "pelicula"  !-->
+                <!--method es  el método del forumalrio que estoy enviando osea de tipo Post  !-->
+                <!--enctype "multipart/form-data" es para poder enviar archivos !-->
+                <form th:action="@{/actors/save}" th:object="${actor}" method="POST" enctype="multipart/form-data">
+                    <!-- Select para el desplegable !-->
+                    <!-- Tenemos que poner el atributo que relaciona las peliculas con los actores que es el objeto que estamos mandando al formulario !-->
+                    <!-- En field el atributo de tipo pelicula es el que establece la relacion manyToOne !-->
+                    <select class="form-select" th:field="*{pelicula}">
+                        <!-- Option lo que se ve en el desplegable recibe el id de la película
+                        para asociarlo con los actores y el título de la película. Recordar que en el ActorController
+                        ya tenemos el objeto película para enviarlo aquí!-->
+                        <option th:value="${film.id}" th:text="${film.titulo}"> </option>
+                    </select>
+
+                    <h4 class="text-center mt-4">Actores</h4>
+
+                    <div class="form-grop my-2">
+                        <input type="text" placeholder="Nombre" th:field="*{nombre}" class="form-control"/> <!-- field completa los atributos de la entidad !-->
+                    </div>
+
+                    <div class="form-grop my-2">
+                        <input type="text" placeholder="Apellido" th:field="*{apellido}"class="form-control"/>
+                    </div>
+
+                    <div class="form-grop">
+                        <button type="submit" class="btn btn-secondary form-control">Guardar Actor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
