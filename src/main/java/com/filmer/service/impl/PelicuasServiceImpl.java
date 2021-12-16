@@ -6,6 +6,8 @@ import com.filmer.service.IPeliculasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PelicuasServiceImpl implements IPeliculasService {
 
@@ -15,5 +17,15 @@ public class PelicuasServiceImpl implements IPeliculasService {
     @Override
     public void save(Pelicula pelicula) {
         iPeliculasDao.save(pelicula);
+    }
+
+    @Override
+    public List<Pelicula> listadoPeliculas() {
+        return iPeliculasDao.findAll();
+    }
+
+    @Override
+    public Pelicula peliculaPorId(Long id) {
+        return iPeliculasDao.findById(id).orElse(null); //Si el métdo fuera Optional no hace falta el orElse
     }
 }

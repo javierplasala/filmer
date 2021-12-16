@@ -10,7 +10,22 @@
 <body>
     <nav th:replace="Layouts/base-Layout :: nav"></nav>
 
-    <h1 class="text-center mt-3">FILMER APP</h1>
+    <div class="alert alert-success text-center" th:if="${comentarioGuardado !=null}" th:text="${comentarioGuardado}"></div>
+    <div class="alert alert-success text-center" th:if="${comentarioModificado !=null}" th:text="${comentarioModificado}"></div>
+    <div class="alert alert-danger text-center" th:if="${comentarioEliminado !=null}" th:text="${comentarioEliminado}"></div>
+
+
+
+    <div class="film-conteiner">
+        <div th:each="item : ${peliculas}"class="galery-item"> <!-- recorro con un bucle each lo que me venga de peliculas!-->
+            <a th:href="@{/peliculas/ver-comentarios/} + ${item.id}">
+                <img th:src="@{'C:\Dibus\uploads'+${item.portada}}">
+            </a>
+            <a>
+                <h4 th:text="${item.titulo}"></h4>
+            </a>
+        </div>
+    </div>
 </body>
 
 </html>

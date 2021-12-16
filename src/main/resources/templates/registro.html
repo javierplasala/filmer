@@ -5,13 +5,31 @@
 <body>
 
     <nav th:replace="Layouts/base-Layout :: nav"></nav>
-    <h1> REGISTRO DE USUARIO</h1>
 
-    <form th:action="@{/usuario/save}" method="POST">
-        <input type="text" name="username" placeholder="Usuario"> <!-- el usuario y contraseña son enviados al metodo del SecurityConfig !-->
-        <input type="password" name="password" placeholder="Contraseña">
-        <button type="submit">Registrar</button>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-4 mt-5">
+                <form th:action="@{/usuario/save}" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="username" placeholder="Usuario"
+                        autocomplete="off" class="form-control text-center fst-italic"> <!-- el usuario y contraseña son enviados al metodo del SecurityConfig !-->
+                    </div>
 
-    </form>
+                    <div class="form-group my-2">
+                        <input type="password" name="password" placeholder="Contraseña"
+                        autocomplete="off" class="form-control text-center fst-italic">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary form-control">Registrar</button>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>

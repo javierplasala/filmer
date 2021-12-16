@@ -38,7 +38,7 @@ public class UsuarioController {
 
     @PostMapping("/save")
     //Metodo para guardar Usuarios con el RolUser
-    public String saveUser(String username, String password, Model model){
+    public String saveUser(String username, String password, RedirectAttributes redirect){
 
         Usuario usuario = new Usuario();
         usuario.setUsername(username); //Viene del formulario de registro
@@ -59,7 +59,7 @@ public class UsuarioController {
         usuarioService.guardarUsuario(usuario);
 
         //Utilizamos el model para mandarle info a la vista
-        model.addAttribute("usuarioRegistrado", "Registro Completado, inicie sesión");
+        redirect.addFlashAttribute("usuarioRegistrado", "Registro Completado, inicie sesión");
 
         return"redirect:/login";
     }

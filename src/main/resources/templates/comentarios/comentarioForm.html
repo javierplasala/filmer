@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form th:action="@{/peliculas/save-comentario}" th:object="${comentario}" method="POST">
+        <h2 th:text="${comentario.pelicula.titulo}"></h2>
+
+        <textarea th:field="*{texto}"></textarea>
+
+        <input type="hidden" th:value="${comentario.pelicula.id}">
+
+        <button type="submit">Enviar</button>
+
+    </form>
+
+</body>
+</html>

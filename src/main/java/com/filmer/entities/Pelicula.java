@@ -22,15 +22,20 @@ public class Pelicula {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pelicula")
     private List<Actor> actores;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pelicula")
+    private List<Comentario> comentarios;
+
     public Pelicula() {
     }
 
-    public Pelicula(Long id, String titulo, String portada, Date fechaEstreno, List<Actor> actores) {
+    public Pelicula(Long id, String titulo, String portada, Date fechaEstreno,
+                    List<Actor> actores, List<Comentario> comentarios) {
         this.id = id;
         this.titulo = titulo;
         this.portada = portada;
         this.fechaEstreno = fechaEstreno;
         this.actores = actores;
+        this.comentarios = comentarios;
     }
 
     public Long getId() {
@@ -67,6 +72,14 @@ public class Pelicula {
 
     public List<Actor> getActores() {
         return actores;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
     public void setActores(List<Actor> actores) {
