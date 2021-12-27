@@ -16,6 +16,17 @@ public class ActorServiceImpl implements IActorService {
 
     @Override
     public void save(Actor actor) {
+
         iActorDao.save(actor);
+    }
+
+    @Override
+    public Actor obtenerActor(Long id) {
+        return iActorDao.findById(id).orElse(null);
+    }
+
+    @Override
+    public void eliminarActor(Long id) {
+        iActorDao.deleteById(id);
     }
 }

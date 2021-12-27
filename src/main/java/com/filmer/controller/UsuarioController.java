@@ -38,7 +38,17 @@ public class UsuarioController {
 
     @PostMapping("/save")
     //Metodo para guardar Usuarios con el RolUser
-    public String saveUser(String username, String password, RedirectAttributes redirect){
+    public String saveUser(String username, String password, RedirectAttributes redirect, Model model){
+
+        if (usuarioService.existsByUserName(username)){
+            model.addAttribute("usuarioRepetido", "Este usuario ya existe, intente otro");
+            return "registro";
+        }
+
+        if (username == "" || password==""){
+            model.addAttribute("camposVacios", "Los campos no pueden estar vacíos");
+            return "registro";
+        }
 
         Usuario usuario = new Usuario();
         usuario.setUsername(username); //Viene del formulario de registro

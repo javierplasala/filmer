@@ -28,4 +28,17 @@ public class PelicuasServiceImpl implements IPeliculasService {
     public Pelicula peliculaPorId(Long id) {
         return iPeliculasDao.findById(id).orElse(null); //Si el métdo fuera Optional no hace falta el orElse
     }
+
+    @Override
+    public void eliminarPelicula(Long id) {
+        iPeliculasDao.deleteById(id);
+    }
+
+    @Override
+    public Pelicula peliPorTitulo(String titulo) {
+        return iPeliculasDao.findByTitulo(titulo);
+    }
+
+
 }
+

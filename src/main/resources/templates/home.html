@@ -16,7 +16,10 @@
 
 
 
+    <div th:replace="Layouts/searchForm :: search-form"></div>
+
     <div class="film-conteiner">
+
         <div th:each="item : ${peliculas}"class="galery-item"> <!-- recorro con un bucle each lo que me venga de peliculas!-->
             <a th:href="@{/peliculas/ver-comentarios/} + ${item.id}">
                 <img th:src="@{'C:\Dibus\uploads'+${item.portada}}">

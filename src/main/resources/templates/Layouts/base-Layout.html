@@ -17,7 +17,7 @@
 <body>
     <nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">FILMER</a>
+            <a class="navbar-brand title" href="#"><i class="fas fa-film"></i>&nbsp FILMER</a>
             <button class="navbar-toggler" type="button"
                     data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -31,6 +31,16 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link active"
+                       aria-current="page" th:href="@{/admin/peli-form}" sec:authorize="hasRole('ROLE_ADMIN')">AÑADIR</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       aria-current="page" th:href="@{/admin/gestion-peliculas}" sec:authorize="hasRole('ROLE_ADMIN')">GESTIÓN PELICULAS</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/usuario/registro}">REGISTRATE</a>
                 </li>
 
@@ -41,10 +51,16 @@
 
             </ul>
 
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+        <!-- MOSTRAR USUARIO !-->
+
+        <div th:if="${username != null}" th:text="${username}" class="btn btn-outline-success mr-5"></div>
+
+        <!-- CIERRE DE SESION !-->
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+                <button type="submit" class="btn btn-default">Cerrar Sesión</button>
             </form>
+
+
         </div>
     </div>
 </nav>

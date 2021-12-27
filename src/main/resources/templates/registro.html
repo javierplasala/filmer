@@ -6,6 +6,11 @@
 
     <nav th:replace="Layouts/base-Layout :: nav"></nav>
 
+    <!-- MENSAJE FLASH!-->
+    <div class="alert alert-danger text-center" th:if="${usuarioRepetido !=null}" th:text="${usuarioRepetido}"></div>
+    <div class="alert alert-danger text-center" th:if="${camposVacios !=null}" th:text="${camposVacios}"></div>
+
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-4 mt-5">

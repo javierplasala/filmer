@@ -1,14 +1,13 @@
 package com.filmer.controller;
 
+import com.filmer.entities.Actor;
 import com.filmer.entities.Pelicula;
+import com.filmer.service.IActorService;
 import com.filmer.service.IPeliculasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,6 +22,9 @@ public class AdminController {
 
     @Autowired
     private IPeliculasService peliculasService;
+
+    @Autowired
+    private IActorService actorService;
 
     //Metodo para que me despliegue un formulario
     @GetMapping("/peli-form")
@@ -59,6 +61,98 @@ public class AdminController {
         }
         return "redirect:/actors/actors-form"; //para que me redireccione al formulario de carga de actores
         }
+
+        //MÉTDO PARA DEVOLVER VISTA DE GESTIONADOR DE PELICULAS
+
+    @GetMapping("/gestion-peliculas")
+    public String listadoPeliculas(Model model){
+        model.addAttribute("peliculas", peliculasService.listadoPeliculas());
+
+        return "admin/gestionPeliculas";
+    }
+
+    //MÉTDO PARA ELIMINAR PELICULAS
+    @GetMapping("/eliminar-pelicula/{id}")
+    public String eliminarPelicula(@PathVariable Long id, RedirectAttributes redirect){
+        peliculasService.eliminarPelicula(id);
+        redirect.addFlashAttribute("peliEliminada","Pelicula Eliminada");
+
+        return "redirect:/admin/gestion-peliculas";
+    }
+
+    @GetMapping("/editar-form/{id}")
+    public String editarFormulario(@PathVariable Long id, Model model){
+        Pelicula pelicula = null;
+
+        if (id>0){
+            pelicula = peliculasService.peliculaPorId(id);
+            model.addAttribute("pelicula", pelicula);
+        }
+        return "admin/editarPelicula";
+    }
+
+    @PostMapping("/editar-pelicula")
+    public String editarPelicula(@RequestParam(name="file") MultipartFile imagePortada,
+                                 Pelicula peli, RedirectAttributes redirect,
+                                 @ModelAttribute("pelicula") Pelicula pelicula, Model model) {
+
+        if (!imagePortada.isEmpty()) {
+            String ruta = "C://Dibus//uploads";
+            String nombreUnico = UUID.randomUUID()+" "+ imagePortada.getOriginalFilename();
+
+            try{
+                byte[] bytes = imagePortada.getBytes();
+                Path rutaAbsoluta = Paths.get(ruta+"//"+nombreUnico);
+                Files.write(rutaAbsoluta,bytes);
+                pelicula.setPortada(nombreUnico);
+
+                peliculasService.save(pelicula);
+                redirect.addFlashAttribute("peliEditada","Peli Editada con éxito");
+
+                }catch (Exception e){
+                e.getCause().getMessage();
+                }
+        }
+
+        return "redirect:/admin/gestion-peliculas";
+
+    }
+    @GetMapping("/editar-actores/{id}")
+    public String editarActores(@PathVariable Long id, Model model){
+
+        Pelicula peliculaById = peliculasService.peliculaPorId(id);
+        model.addAttribute("peliEncontrada", peliculaById);
+
+        return "admin/edicionActores";
+    }
+
+    @GetMapping("/cargar-actor/{id}")
+    public String cargarActor(@PathVariable Long id, Model model){
+
+        Actor actor = actorService.obtenerActor(id);
+        model.addAttribute("actor", actor);
+
+        return "admin/editarActorForm";
+    }
+
+    @PostMapping("/editar-actor")
+    public String editarActor(@ModelAttribute("actor")Actor actor, RedirectAttributes redirect){
+
+        actorService.save(actor);
+        redirect.addFlashAttribute("actorEditado","Actor Editado con éxito");
+        return "redirect:/admin/gestion-peliculas";
+    }
+
+
+    @GetMapping("/eliminar-actor/{id}")
+    public String eliminarActor(@PathVariable Long id, RedirectAttributes redirect){
+
+        actorService.eliminarActor(id);
+        redirect.addFlashAttribute("actorEliminado","Actor Eliminado de la BD");
+
+        return "redirect:/admin/gestion-peliculas";
+    }
+
 
 }
 

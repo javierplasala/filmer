@@ -26,3 +26,13 @@
     padding-top: 10px;
     text-align: center;
 }
+
+.edit-actor{
+    text-decoration: none;
+    font-style: italic;
+    margin-left: 2px;
+}
+
+.title{
+    margin-left: 12%;
+}

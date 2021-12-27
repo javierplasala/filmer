@@ -3,6 +3,7 @@ package com.filmer.controller;
 import com.filmer.entities.Actor;
 import com.filmer.entities.Pelicula;
 import com.filmer.service.IActorService;
+import com.filmer.service.IPeliculasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,10 @@ public class ActorController {
 
 @Autowired
 private IActorService actorService;
+
+@Autowired
+private IPeliculasService peliculasService;
+
 
 //Metodo para desplegar formulario de carga de actores
 @GetMapping("/actors-form")
@@ -42,5 +47,24 @@ public String saveActor(Actor actor, RedirectAttributes redirect, Model model,
     return "redirect:/actors/actors-form";
 }
 
+@GetMapping("/add-actores/{id}") //Le pasamos el id de la pelicula para que asocie al actor con la peli
+public String addActores(@PathVariable Long id, Model model){
+
+    Pelicula pelicula = peliculasService.peliculaPorId(id);
+
+    model.addAttribute("actor", new Actor());
+    model.addAttribute("film", pelicula);
+
+    return "admin/addActoresForm";
+}
+
+    @PostMapping("/save-actor")
+    public String saveActors(Actor actor, RedirectAttributes redirect, Model model){
+
+        actorService.save(actor);
+        redirect.addFlashAttribute("actorGuardado","Actor guardado con éxito!");
+
+        return "redirect:/admin/gestion-peliculas";
+    }
 
 }
